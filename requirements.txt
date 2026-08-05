@@ -1,11 +1,4 @@
 streamlit
 pandas
-pdfplumber
-python-docx
-openpyxl
-python-pptx
-openai
 plotly
-python-dotenv
-SQLAlchemy
-pytest
+kaleido
