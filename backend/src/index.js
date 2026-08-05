@@ -10,6 +10,13 @@ const { errorHandler } = require('./middleware/errorHandler');
 const app = express();
 const PORT = process.env.PORT || 5000;
 
+// Verificar se OPENAI_API_KEY está configurada
+if (!process.env.OPENAI_API_KEY || process.env.OPENAI_API_KEY.trim() === '') {
+  console.warn('⚠️  AVISO: OPENAI_API_KEY não está configurada!');
+  console.warn('ℹ️  Configure a variável de ambiente OPENAI_API_KEY antes de usar o sistema');
+  console.warn('ℹ️  Obtenha em: https://platform.openai.com/account/api-keys');
+}
+
 // Middlewares
 // Support multiple origins provided via CORS_ORIGIN env var (comma-separated)
 // and echo back only the single allowed origin per request.
@@ -68,7 +75,11 @@ app.use((req, res) => {
 app.listen(PORT, () => {
   console.log(`🚀 Servidor iniciado em http://localhost:${PORT}`);
   console.log(`📊 Dashboard API rodando`);
-  console.log(`🤖 OpenAI Integration habilitada`);
+  if (process.env.OPENAI_API_KEY && process.env.OPENAI_API_KEY.trim() !== '') {
+    console.log(`🤖 OpenAI Integration habilitada`);
+  } else {
+    console.warn(`⚠️  OpenAI Integration DESABILITADA - Configure OPENAI_API_KEY`);
+  }
 });
 
 module.exports = app;
