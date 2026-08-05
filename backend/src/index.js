@@ -11,10 +11,29 @@ const app = express();
 const PORT = process.env.PORT || 5000;
 
 // Middlewares
-app.use(cors({
-  origin: process.env.CORS_ORIGIN || 'http://localhost:3000',
-  credentials: true
-}));
+// Support multiple origins provided via CORS_ORIGIN env var (comma-separated)
+// and echo back only the single allowed origin per request.
+const rawCorsOrigin = process.env.CORS_ORIGIN || 'http://localhost:3000';
+let whitelist = [];
+if (rawCorsOrigin && rawCorsOrigin.trim() !== '') {
+  whitelist = rawCorsOrigin.split(',').map(s => s.trim());
+}
+
+const corsOptions = {
+  origin: function(origin, callback) {
+    // allow requests with no origin (e.g. curl, mobile apps, server-to-server)
+    if (!origin) return callback(null, true);
+    // allow if origin is in whitelist
+    if (whitelist.indexOf(origin) !== -1) return callback(null, true);
+    return callback(new Error('Not allowed by CORS'));
+  },
+  credentials: true,
+  methods: ['GET', 'POST', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization']
+};
+
+app.use(cors(corsOptions));
+app.options('*', cors(corsOptions));
 
 app.use(express.json({ limit: '50mb' }));
 app.use(express.urlencoded({ limit: '50mb', extended: true }));
