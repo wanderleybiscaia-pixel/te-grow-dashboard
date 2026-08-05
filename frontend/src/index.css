@@ -1,0 +1,54 @@
+import './index.css';
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+* {
+  @apply transition-colors duration-200;
+}
+
+body {
+  @apply bg-gradient-to-br from-slate-50 to-slate-100 min-h-screen;
+  font-family: 'Inter', sans-serif;
+}
+
+.container {
+  @apply max-w-7xl mx-auto px-4 sm:px-6 lg:px-8;
+}
+
+.card {
+  @apply bg-white rounded-lg shadow-md border border-slate-200 p-6;
+}
+
+.card-hover {
+  @apply card hover:shadow-lg hover:border-slate-300;
+}
+
+.btn {
+  @apply px-4 py-2 rounded-lg font-medium transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2;
+}
+
+.btn-primary {
+  @apply btn bg-blue-600 text-white hover:bg-blue-700 focus:ring-blue-500;
+}
+
+.btn-secondary {
+  @apply btn bg-slate-200 text-slate-900 hover:bg-slate-300 focus:ring-slate-500;
+}
+
+.btn-danger {
+  @apply btn bg-red-600 text-white hover:bg-red-700 focus:ring-red-500;
+}
+
+.input-field {
+  @apply w-full px-4 py-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent;
+}
+
+.section-title {
+  @apply text-3xl font-bold text-slate-900 mb-8;
+}
+
+.subsection-title {
+  @apply text-xl font-semibold text-slate-800 mb-4;
+}
